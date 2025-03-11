@@ -1,4 +1,5 @@
 'use client';
+import { Briefcase, Clock } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import { useRouter } from 'next/navigation';
@@ -19,10 +20,20 @@ const JobCard = ({ job }) => {
               {job?.job_status}
             </span>
           </div>
-          <p className="text-sm text-gray-500 flex items-center gap-1">
+          <div className="flex items-center space-x-4 text-gray-500 mt-2">
+        <div className="flex items-center gap-1">
+          <Briefcase className="w-3 h-3" />
+          <span className="text-sm">{job.job_type}</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <Clock className="w-3 h-3" />
+          <span className="text-sm">{job.posted_time}</span>
+        </div>
+      </div>
+          {/* <p className="text-sm text-gray-500 flex items-center gap-1">
             <span>🕒 {job?.job_type}</span> • <span>{job?.posted_time}</span>
-          </p>
-          <p className="mt-2 text-gray-700">{job?.jd_description}</p>
+          </p> */}
+          <p className="mt-2 text-gray-700 text-sm leading-relaxed tracking-normal text-justify">{job?.jd_description}</p>
           <div className="mt-3 flex gap-2 flex-wrap">
             {job?.skills?.split(", ").map((skill, index) => (
               <span key={index} className="bg-gray-200 px-3 py-1 rounded-md text-sm">{skill}</span>

@@ -20,7 +20,7 @@ const SearchBar = ({ onSearch }) => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="bg-white shadow px-4 py-2 rounded-lg flex items-center gap-2">
-              <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+              {/* <span className="w-2 h-2 bg-green-500 rounded-full"></span> */}
               {selectedStatus || 'Job Status'}
             </Button>
           </DropdownMenuTrigger>
