@@ -17,16 +17,16 @@ const JobInfo = ({ job }) => {
         </div>
         <div className="mt-6">
         <h2 className="text-xl font-semibold">Job Description</h2>
-        {/* <p className="mt-2 text-gray-700 leading-relaxed">
-          {job.jd_description.length > 250 ? (
+        <p className="mt-2 text-gray-700 leading-relaxed">
+          {job.Description.length > 250 ? (
             <>
-              {job.jd_description.substring(0, 250)}...
+              {job.Description.substring(0, 250)}...
               <span className="text-blue-600 cursor-pointer"> View More</span>
             </>
           ) : (
-            job.jd_description
+            job.Description
           )}
-        </p> */}
+        </p>
       </div>
 
       </div>

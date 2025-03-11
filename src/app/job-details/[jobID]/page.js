@@ -32,7 +32,7 @@ const JobDetails = () => {
   }, []);
 
   const job = jobData.find((j) => j.Jd_id === jobID);
-  console.log("Selected Job:", job);
+
 
   return (
     <div className="w-full mx-auto p-6">
@@ -47,7 +47,7 @@ const JobDetails = () => {
         <>
           <JobInfo job={job} />
           {/* Uncomment this if candidates should be displayed */}
-          {/* <JobCandidates candidates={job.candidates} jobID={jobID} /> */}
+          <JobCandidates candidates={job.candidates} jobID={jobID} />
         </>
       ) : (
         // **Job Not Found Message**
