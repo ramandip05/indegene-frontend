@@ -5,7 +5,25 @@ import { Card, CardContent } from "../ui/card";
 import { useRouter } from 'next/navigation';
 const JobCard = ({ job }) => {
     const router = useRouter();
-    console.log("job",job)
+    const formatTimeAgo = (timestamp) => {
+      const postedDate = new Date(timestamp);
+      const now = new Date();
+      const diffInSeconds = Math.floor((now - postedDate) / 1000);
+      
+      if (diffInSeconds < 60) {
+          return `${diffInSeconds} seconds ago`;
+      } 
+      const diffInMinutes = Math.floor(diffInSeconds / 60);
+      if (diffInMinutes < 60) {
+          return `${diffInMinutes} minutes ago`;
+      }
+      const diffInHours = Math.floor(diffInMinutes / 60);
+      if (diffInHours < 24) {
+          return `${diffInHours} hours ago`;
+      }
+      const diffInDays = Math.floor(diffInHours / 24);
+      return `${diffInDays} days ago`;
+  };
     const handleClick = (jobID) => {
       console.log("hitt","jobID",jobID)
         router.push(`/job-details/${jobID}`);
@@ -27,7 +45,7 @@ const JobCard = ({ job }) => {
         </div>
         <div className="flex items-center gap-1">
           <Clock className="w-3 h-3" />
-          <span className="text-sm">{job.posted_time}</span>
+          <span className="text-sm">{formatTimeAgo(job.posted_time)}</span>
         </div>
       </div>
           {/* <p className="text-sm text-gray-500 flex items-center gap-1">

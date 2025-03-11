@@ -7,23 +7,23 @@ const JobCandidates = ({ candidates, jobID }) => {
   const router = useRouter();
   
   // Function to filter candidates based on candidate IDs
-  const filterCandidates = (candidateIds) => {
-    return candidateData.filter(candidate => candidateIds.includes(candidate.candidateID));
-  };
+  // const filterCandidates = (candidateIds) => {
+  //   return candidateData.filter(candidate => candidateIds.includes(candidate.candidateID));
+  // };
 
   // State to track filtered candidates
-  const [filteredCandidates, setFilteredCandidates] = useState([]);
+  // const [filteredCandidates, setFilteredCandidates] = useState([]);
 
   // State to track availability per candidate using candidateID
   const [availability, setAvailability] = useState({});
 
   useEffect(() => {
     if (candidates && candidates.length > 0) {
-      const filtered = filterCandidates(candidates);
-      setFilteredCandidates(filtered);
+      // const filtered = filterCandidates(candidates);
+      // setFilteredCandidates(filtered);
 
       // Initialize availability state based on filtered candidates
-      const initialAvailability = filtered.reduce((acc, candidate) => {
+      const initialAvailability = candidates.reduce((acc, candidate) => {
         acc[candidate.candidateID] = candidate.available || false;
         return acc;
       }, {});
@@ -62,14 +62,14 @@ const JobCandidates = ({ candidates, jobID }) => {
           </thead>
 
           <tbody>
-            {filteredCandidates.length > 0 ? (
-              filteredCandidates.map((candidate, index) => (
-                <tr key={candidate.candidateID} className="text-sm border">
+            {candidates.length > 0 ? (
+              candidates.map((candidate, index) => (
+                <tr key={candidate.id} className="text-sm border">
                   <td className="p-3 border text-center">{index + 1}</td>
-                  <td className="p-3 border">{candidate.name}</td>
-                  <td className="p-3 border">{candidate.AI_score}</td>
-                  <td className="p-3 border">{candidate.category}</td>
-                  <td className="p-3 border text-blue-600 cursor-pointer">
+                  <td className="p-3 border text-center">{candidate.name}</td>
+                  <td className="p-3 border text-center">{candidate.score}%</td>
+                  <td className="p-3 border text-center">{candidate.candidate_type}</td>
+                  <td className="p-3 border text-blue-600 cursor-pointer text-center">
                     <a href={candidate.linkedin} target="_blank" rel="noopener noreferrer">
                       Link
                     </a>
@@ -81,7 +81,7 @@ const JobCandidates = ({ candidates, jobID }) => {
                   </td>
                   <td className="p-3 border text-center flex justify-center items-center gap-2">
                     <button
-                      onClick={() => handleAvailability(candidate.candidateID, true)}
+                      onClick={() => handleAvailability(candidate.id, true)}
                       className={`px-3 py-1 rounded-md text-sm font-semibold cursor-pointer ${
                         availability[candidate.candidateID] ? "bg-green-500 text-white" : "bg-gray-300 text-black"
                       }`}
@@ -89,7 +89,7 @@ const JobCandidates = ({ candidates, jobID }) => {
                       Yes
                     </button>
                     <button
-                      onClick={() => handleAvailability(candidate.candidateID, false)}
+                      onClick={() => handleAvailability(candidate.id, false)}
                       className={`px-3 py-1 rounded-md text-sm font-semibold cursor-pointer ${
                         !availability[candidate.candidateID] ? "bg-red-500 text-white" : "bg-gray-300 text-black"
                       }`}

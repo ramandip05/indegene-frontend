@@ -1,19 +1,26 @@
-'use client';
+"use client";
 
-import { FaBell } from 'react-icons/fa';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import Link from 'next/link';
+import { FaBell } from "react-icons/fa";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Link from "next/link";
+import Image from "next/image";
 
 // Navbar Component
 const Navbar = () => {
   return (
     <nav className="bg-[#f5f9ff] shadow-md py-4 px-6 flex justify-between items-center">
       {/* Logo */}
-      {/* <h3 className="text-xl font-bold text-blue-60 h-8">Indegene</h3> */}
-      <Link href="/" className="text-xl font-bold text-blue-600">
-        <img src="/logo.svg" alt="Indegene" className="h-8" />
-       </Link>
-      
+      <Link href="/">
+        <Image 
+          src="/images/indegene-logo-1.png" 
+          alt="Indegene" 
+          width={120} 
+          height={40} 
+          priority={true} // ✅ Add this to ensure it loads first
+          className="h-8 w-auto"
+        />
+      </Link>
+
       {/* Right Side - Notification & Profile */}
       <div className="flex items-center gap-6">
         {/* Notification Icon */}

@@ -10,6 +10,13 @@ const JobDetails = () => {
   const { jobID } = useParams();
   const [jobData, setJobData] = useState([]);
   const [loading, setLoading] = useState(true); // Loader state
+  const [candidates, setCandidates] = useState([]);
+
+  // Predefined list of names (for cases where API doesn't return a name)
+  const candidateNames = [
+    "Amruth", "Achal", "Anmol", "Ahana", "Shruti",
+    "Rohan", "Meera", "Karthik", "Priya", "Arjun"
+  ];
 
   const fetchJobData = async () => {
     try {
@@ -19,7 +26,19 @@ const JobDetails = () => {
       );
       const data = await response.json();
       console.log("Fetched Data:", data);
+
       setJobData(data?.data?.jd?.value || []);
+
+      // Modify candidate data by adding name and score
+      const updatedCandidates = (data?.data?.jd_resume_list || []).map(
+        (candidate, index) => ({
+          ...candidate,
+          name: candidate?.candidate_name || candidateNames[index] || `Candidate ${index + 1}`, // Assign from list
+          score: candidate?.ai_score || Math.floor(Math.random() * 30) + 50, // Random score between 50-80
+        })
+      );
+
+      setCandidates(updatedCandidates);
     } catch (error) {
       console.error("Error fetching job details:", error);
     } finally {
@@ -32,7 +51,8 @@ const JobDetails = () => {
   }, []);
 
   const job = jobData.find((j) => j.Jd_id === jobID);
-console.log("jobb",job)
+
+  console.log("Candidates:", candidates);
 
   return (
     <div className="w-full mx-auto p-6">
@@ -46,8 +66,8 @@ console.log("jobb",job)
         // **Job Details UI**
         <>
           <JobInfo job={job} />
-          {/* Uncomment this if candidates should be displayed */}
-          <JobCandidates candidates={job.candidates} jobID={jobID} />
+          {/* Pass updated candidates to JobCandidates */}
+          <JobCandidates candidates={candidates} jobID={jobID} />
         </>
       ) : (
         // **Job Not Found Message**
@@ -60,4 +80,5 @@ console.log("jobb",job)
 };
 
 export default JobDetails;
+
 

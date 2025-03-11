@@ -3,7 +3,25 @@ import { Briefcase, Clock } from "lucide-react";
 
 const JobInfo = ({ job }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
-
+  const formatTimeAgo = (timestamp) => {
+    const postedDate = new Date(timestamp);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now - postedDate) / 1000);
+    
+    if (diffInSeconds < 60) {
+        return `${diffInSeconds} seconds ago`;
+    } 
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) {
+        return `${diffInMinutes} minutes ago`;
+    }
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) {
+        return `${diffInHours} hours ago`;
+    }
+    const diffInDays = Math.floor(diffInHours / 24);
+    return `${diffInDays} days ago`;
+};
   return (
     <div>
       <h1 className="text-2xl font-bold">{job.Title}</h1>
@@ -14,7 +32,7 @@ const JobInfo = ({ job }) => {
         </div>
         <div className="flex items-center gap-1">
           <Clock className="w-3 h-3" />
-          <span className="text-sm">{job.Posted_time}</span>
+          <span className="text-sm">{formatTimeAgo(job.Posted_time)}</span>
         </div>
       </div>
       <p className="text-gray-500 mt-2">
