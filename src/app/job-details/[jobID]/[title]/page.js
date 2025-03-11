@@ -68,7 +68,7 @@ console.log(jobID)
       const updatedCandidates = (data?.data?.jd_resume_list || []).map(
         (candidate, index) => ({
           ...candidate,
-          name: candidate?.candidate_name || candidateNames[index] || `Candidate ${index + 1}`, // Assign from list
+       // Assign from list
           score: candidate?.ai_score || Math.floor(Math.random() * 30) + 50, // Random score between 50-80
         })
       );

@@ -12,12 +12,12 @@ const Navbar = () => {
       {/* Logo */}
       <Link href="/">
         <Image 
-          src="/images/indegene-logo-1.png" 
+          src="/images/indegene-logo.png" 
           alt="Indegene" 
           width={120} 
           height={40} 
-          priority={true} // ✅ Add this to ensure it loads first
-          className="h-8 w-auto"
+          // priority={true} // ✅ Add this to ensure it loads first
+          className="h-16 w-auto"
         />
       </Link>
 
