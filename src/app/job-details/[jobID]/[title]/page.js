@@ -11,7 +11,7 @@ const JobDetails = () => {
   const [jobData, setJobData] = useState([]);
   const [loading, setLoading] = useState(true); // Loader state
   const [candidates, setCandidates] = useState([]);
-
+  const decodedTitle = decodeURIComponent(title);
   // Predefined list of names (for cases where API doesn't return a name)
   const candidateNames = [
     "Amruth", "Achal", "Anmol", "Ahana", "Shruti",
@@ -32,7 +32,7 @@ console.log(jobID)
           body: JSON.stringify({
             // "jd_link": "https://skysecuretech.sharepoint.com/:b:/s/test/EbAAl9F7eEdGs9_U62TVQOMBBkMnMuQ9x_ccK9zOnDu3fw?e=pNgzzg",
             "jd_id": jobID,
-            "jd_title": title
+            "jd_title": decodedTitle
           }),
         }
       );
