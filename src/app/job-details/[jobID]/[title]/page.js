@@ -44,7 +44,7 @@ console.log(jobID)
       console.log("Job data posted successfully.");
 
       // ✅ **Wait for 40 seconds before fetching job details**
-      setTimeout(fetchJobData, 20000); // 40 seconds delay
+      setTimeout(fetchJobData, 40000); // 40 seconds delay
     } catch (error) {
       console.error("Error posting job data:", error);
       setLoading(false);
