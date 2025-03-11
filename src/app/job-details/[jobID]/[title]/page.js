@@ -7,7 +7,7 @@ import JobCandidates from "@/components/JobCandidates/JobCandidates";
 import { Loader2 } from "lucide-react"; // Import loader icon
 
 const JobDetails = () => {
-  const { jobID } = useParams();
+  const { jobID,title } = useParams();
   const [jobData, setJobData] = useState([]);
   const [loading, setLoading] = useState(true); // Loader state
   const [candidates, setCandidates] = useState([]);
@@ -17,10 +17,45 @@ const JobDetails = () => {
     "Amruth", "Achal", "Anmol", "Ahana", "Shruti",
     "Rohan", "Meera", "Karthik", "Priya", "Arjun"
   ];
+console.log(jobID)
+  // ✅ **Function to make POST request before fetching job details**
+  const postJobData = async () => {
+    try {
+      console.log("Posting job data...");
+      const response = await fetch(
+        "https://prod-12.centralindia.logic.azure.com:443/workflows/0945646ee9f544de97bf6dce98793b2e/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=8Wg3RTj9ifyrBI8NyfX_CeZjCZGfDDU3uOelMVwrjTc",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            // "jd_link": "https://skysecuretech.sharepoint.com/:b:/s/test/EbAAl9F7eEdGs9_U62TVQOMBBkMnMuQ9x_ccK9zOnDu3fw?e=pNgzzg",
+            "jd_id": jobID,
+            "jd_title": title
+          }),
+        }
+      );
 
+      if (!response.ok) {
+        throw new Error("Failed to post job data");
+      }
+
+      console.log("Job data posted successfully.");
+
+      // ✅ **Wait for 40 seconds before fetching job details**
+      setTimeout(fetchJobData, 20000); // 40 seconds delay
+    } catch (error) {
+      console.error("Error posting job data:", error);
+      setLoading(false);
+    }
+  };
+
+  // ✅ **Function to fetch job data**
   const fetchJobData = async () => {
     try {
       setLoading(true); // Start loading
+      console.log("Fetching job details after 40 seconds...");
       const response = await fetch(
         "https://prod-10.centralindia.logic.azure.com:443/workflows/7872db48cf6241d089d4629b3dce2539/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Dl1C8HB77eoqGo2Svkp6QqUMN8vGIuSjjsDEhQ6hQa0"
       );
@@ -46,8 +81,9 @@ const JobDetails = () => {
     }
   };
 
+  // ✅ **UseEffect to trigger the POST request first**
   useEffect(() => {
-    fetchJobData();
+    postJobData();
   }, []);
 
   const job = jobData.find((j) => j.Jd_id === jobID);
@@ -60,7 +96,7 @@ const JobDetails = () => {
         // **Loader UI**
         <div className="flex justify-center items-center h-40">
           <Loader2 className="animate-spin w-10 h-10 text-blue-500" />
-          <span className="ml-3 text-gray-700 text-lg">Loading Job Details...</span>
+          <span className="ml-3 text-gray-700 text-lg">Processing Job Details...</span>
         </div>
       ) : job ? (
         // **Job Details UI**
@@ -80,5 +116,3 @@ const JobDetails = () => {
 };
 
 export default JobDetails;
-
-

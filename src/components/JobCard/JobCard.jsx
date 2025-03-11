@@ -24,10 +24,16 @@ const JobCard = ({ job }) => {
       const diffInDays = Math.floor(diffInHours / 24);
       return `${diffInDays} days ago`;
   };
-    const handleClick = (jobID) => {
-      console.log("hitt","jobID",jobID)
-        router.push(`/job-details/${jobID}`);
-    };
+ 
+  const handleClick = (jobID, title) => {
+    
+    console.log("hitt", "jobID", jobID);
+
+    const encodedJobID = encodeURIComponent(jobID);
+    const encodedTitle = encodeURIComponent(title);
+
+    router.push(`/job-details/${encodedJobID}/${encodedTitle}`);
+};
     return (
       <Card className="shadow-lg border rounded-lg p-4 bg-[#f5f9ff]">
         <CardContent>
@@ -57,7 +63,7 @@ const JobCard = ({ job }) => {
               <span key={index} className="bg-gray-200 px-3 py-1 rounded-md text-sm">{skill}</span>
             ))}
           </div>
-          <Button variant="link" className="mt-3 text-blue-600 cursor-pointer" onClick={()=>handleClick(job?.jd_id)}>View more</Button>
+          <Button variant="link" className="mt-3 text-blue-600 cursor-pointer" onClick={()=>handleClick(job?.jd_id,job?.title)}>View more</Button>
         </CardContent>
       </Card>
     );
