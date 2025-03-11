@@ -32,7 +32,7 @@ const JobDetails = () => {
   }, []);
 
   const job = jobData.find((j) => j.Jd_id === jobID);
-
+console.log("jobb",job)
 
   return (
     <div className="w-full mx-auto p-6">
