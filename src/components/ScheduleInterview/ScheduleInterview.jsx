@@ -1,9 +1,10 @@
 import { useState } from "react";
 
-const ScheduleInterview = () => {
+const ScheduleInterview = ({interviewDetails}) => {
   const [rounds, setRounds] = useState([1, 2, 3]);
-  const [activeRound, setActiveRound] = useState(1); // ✅ Default active round
+  const [activeRound, setActiveRound] = useState(0); // ✅ Default active round
 
+  console.log("interviewDetails",interviewDetails)
   return (
     <div className="bg-white p-6 shadow-md rounded-lg">
       <h2 className="text-2xl font-semibold mb-4">Schedule Interview</h2>

@@ -143,7 +143,7 @@ console.log("candidates",candidates)
     }));
     const name = encodeURIComponent(candidateName);
     if (status) {
-      router.push(`/candidate-profile/${candidateID}/${jobID}/${name}`);
+      router.push(`/candidate-profile/${jobID}/${name}`);
     }
   };
 

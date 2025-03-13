@@ -72,7 +72,7 @@ const CandidateProfile = ({candidateData}) => {
           <p><strong>Industry:</strong> {candidateData?.industry || "N/A"}</p>
           <p><strong>Job Level:</strong> {candidateData?.job_level || "N/A"}</p>
           <p><strong>Salary:</strong> {candidateData?.salary || "N/A"}</p>
-          <p><strong>Experience:</strong> {candidateData?.experience || "N/A"}</p>
+          <p><strong>Experience:</strong> {candidateData?.expirence || "N/A"}</p>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import CandidateProfile from "@/components/CandidateProfile/CandidateProfile.";
+import ScheduleInter from "@/components/Schedule/ScheduleInterview";
 import ScheduleDateTime from "@/components/ScheduleDateTime/ScheduleDateTime";
 import ScheduleInterview from "@/components/ScheduleInterview/ScheduleInterview";
 import { Loader2 } from "lucide-react";
@@ -12,23 +13,25 @@ import { useEffect, useState } from "react";
 const CandidateProfilePage = () => {
   const { slug } = useParams();
   console.log("slug",slug)
-  const [candidateID, jobID, name]=slug
+  const [jobID, name]=slug
   const decodedName = decodeURIComponent(name);
   const [candidateData,setCandidateData] = useState([])
   const [interviewDetails,setInterviewDetails]=useState([])
   const [loading, setLoading] = useState(true); // Loader state
+  const [candidateId,setCandidateId] = useState(null)
   const fetchCandidateData = async () => {
     try {
       setLoading(true); // Start loading
       console.log("Fetching candidate details...");
       const response = await fetch(
-        `https://prod-25.centralindia.logic.azure.com:443/workflows/8f93a8db429342f98940923564f04dca/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=yhG5QSyuCV-5dLEfsGpuUbWR9kGjfz63XXhmeVtl9SM&jd_id=${jobID}&candidate_id=${candidateID}&name=${decodedName}`
+        `https://prod-25.centralindia.logic.azure.com:443/workflows/8f93a8db429342f98940923564f04dca/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=yhG5QSyuCV-5dLEfsGpuUbWR9kGjfz63XXhmeVtl9SM&jd_id=${jobID}&name=${decodedName}`
       );
       const data = await response.json();
       console.log("Fetched Data:", data);
 
       setCandidateData(data?.data?.candidate_data || []);
       setInterviewDetails(data?.data?.candidate_interview_list || [])
+      setCandidateId(data?.data?.candidate_data[0]?.candidate_id)
       // Modify candidate data by adding name and score
       // const updatedCandidates = (data?.data?.jd_resume_list || []).map(
       //   (candidate, index) => ({
@@ -49,8 +52,8 @@ const CandidateProfilePage = () => {
   // ✅ **UseEffect to trigger the POST request first**
   useEffect(() => {
     fetchCandidateData();
-  }, [jobID,candidateID]);
-
+  }, [jobID,decodedName]);
+console.log("interviewDetails1",interviewDetails)
   if (loading) {
     return (
       <div className="flex flex-col justify-center items-center h-40">
@@ -65,10 +68,11 @@ const CandidateProfilePage = () => {
       <CandidateProfile candidateData={candidateData[0]} />
 
       {/* Schedule Interview */}
-      <ScheduleInterview interviewDetails={interviewDetails}/>
+      {/* <ScheduleInterview interviewDetails={interviewDetails}/> */}
 
       {/* Schedule Date and Time */}
-      <ScheduleDateTime candidateID={candidateData[0]?.candidate_id}/>
+      <ScheduleInter candidateID={candidateId} name={decodedName} interviewDetails={interviewDetails}/>
+      {/* <ScheduleDateTime candidateID={candidateId} name={decodedName} interviewDetails={interviewDetails}/> */}
     </div>
   );
 };
