@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import ReactApexChart from "react-apexcharts"; // Import ApexCharts if needed
+
 import PaySearchFilter from "@/components/PaySearchFilter/PaySearchFilter";
 import SalaryBreakup from "@/components/SalaryBreakup/SalaryBreakup";
- 
+import dynamic from "next/dynamic";
+const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
+
 const CandidateInfo = () => {
     const candidate = {
         name: "Amruth",
