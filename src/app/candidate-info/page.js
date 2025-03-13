@@ -7,7 +7,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import PaySearchFilter from "@/components/PaySearchFilter/PaySearchFilter";
 import SalaryBreakup from "@/components/SalaryBreakup/SalaryBreakup";
 import dynamic from "next/dynamic";
-const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import ReactApexChart from "react-apexcharts";
+// const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const CandidateInfo = () => {
     const candidate = {
