@@ -57,12 +57,12 @@ console.log(jobID)
       setLoading(true); // Start loading
       console.log("Fetching job details after 40 seconds...");
       const response = await fetch(
-        "https://prod-10.centralindia.logic.azure.com:443/workflows/7872db48cf6241d089d4629b3dce2539/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Dl1C8HB77eoqGo2Svkp6QqUMN8vGIuSjjsDEhQ6hQa0"
+        `https://prod-10.centralindia.logic.azure.com:443/workflows/7872db48cf6241d089d4629b3dce2539/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Dl1C8HB77eoqGo2Svkp6QqUMN8vGIuSjjsDEhQ6hQa0&jd_id=${jobID}`
       );
       const data = await response.json();
       console.log("Fetched Data:", data);
 
-      setJobData(data?.data?.jd?.value || []);
+      setJobData(data?.data?.jd_description || []);
 
       // Modify candidate data by adding name and score
       const updatedCandidates = (data?.data?.jd_resume_list || []).map(
@@ -84,9 +84,9 @@ console.log(jobID)
   // ✅ **UseEffect to trigger the POST request first**
   useEffect(() => {
     postJobData();
-  }, []);
+  }, [jobID]);
 
-  const job = jobData.find((j) => j.Jd_id === jobID);
+  const job = jobData.find((j) => j.jd_id === jobID);
 
   console.log("Candidates:", candidates);
 

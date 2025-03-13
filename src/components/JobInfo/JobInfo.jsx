@@ -24,31 +24,31 @@ const JobInfo = ({ job }) => {
 };
   return (
     <div>
-      <h1 className="text-2xl font-bold">{job.Title}</h1>
+      <h1 className="text-2xl font-bold">{job.title}</h1>
       <div className="flex items-center space-x-4 text-gray-500 mt-2">
         <div className="flex items-center gap-1">
           <Briefcase className="w-3 h-3" />
-          <span className="text-sm">{job.Job_type}</span>
+          <span className="text-sm">{job.job_type}</span>
         </div>
         <div className="flex items-center gap-1">
           <Clock className="w-3 h-3" />
-          <span className="text-sm">{formatTimeAgo(job.Posted_time)}</span>
+          <span className="text-sm">{formatTimeAgo(job.posted_time)}</span>
         </div>
       </div>
       <p className="text-gray-500 mt-2">
-        <span className="text-sm ">Job ID</span> <strong>{job.Jd_id}</strong>
+        <span className="text-sm ">Job ID</span> <strong>{job.jd_id}</strong>
       </p>
       {/* <p className="text-gray-500 text-sm mt-1">🕒 {job.Job_type} • {job.Posted_time}</p> */}
       {/* <p className="text-gray-500  text-sm mt-1">Job ID - <b>{job.Jd_id}</b></p> */}
       <div className="mt-6 bg-white p-6 shadow-md rounded-lg border">
         <h2 className="text-lg font-semibold mb-4">Employment Information</h2>
         <div className="grid grid-cols-2 gap-4 text-gray-700 text-sm">
-          <p><strong>Industry:</strong> {job.Industry_type}</p>
-          <p><strong>Location:</strong> {job.Location}</p>
-          <p><strong>Allocated Budget:</strong> {job.Allocated_budget}</p>
-          <p><strong>Job Level:</strong> {job.Job_level}</p>
-          <p><strong>Job Type:</strong> {job.Job_type}</p>
-          <p><strong>Experience:</strong> {job.Expirence_level}</p>
+          <p><strong>Industry:</strong> {job.industry_type}</p>
+          <p><strong>Location:</strong> {job.location}</p>
+          <p><strong>Allocated Budget:</strong> {job.allocated_budget}</p>
+          <p><strong>Job Level:</strong> {job.job_level}</p>
+          <p><strong>Job Type:</strong> {job.job_type}</p>
+          <p><strong>Experience:</strong> {job.expirence_required}</p>
         </div>
       </div>
 
@@ -56,7 +56,7 @@ const JobInfo = ({ job }) => {
       <div className="mt-6">
         <h2 className="text-xl font-semibold">Job Description</h2>
         <p className="mt-2 text-gray-700 leading-relaxed">
-          {showFullDescription ? job.Description : `${job.Description.substring(0, 250)}... `}
+          {showFullDescription ? job.description : `${job.description.substring(0, 250)}... `}
           <span 
             className="text-blue-600 cursor-pointer font-semibold"
             onClick={() => setShowFullDescription(!showFullDescription)}
