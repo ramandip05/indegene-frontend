@@ -362,7 +362,7 @@ const CandidateInfo = () => {
                 {/* Candidate Details Section */}
                 <h2 className="text-3xl font-bold text-gray-800">Candidate Details</h2>
                 <div className="flex flex-1 flex-wrap gap-10 items-center">
-                    <div className="flex flex-wrap gap-10 items-center">
+                    <div className="flex flex-1 flex-wrap gap-10 items-center">
                         <Avatar className="w-28 h-28">
                             <AvatarImage src={candidate.image} alt={candidate.name} />
                             <AvatarFallback>{candidate.name.charAt(0)}</AvatarFallback>
