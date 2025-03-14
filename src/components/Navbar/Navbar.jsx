@@ -17,7 +17,7 @@ const Navbar = () => {
           width={120} 
           height={40} 
           // priority={true} // ✅ Add this to ensure it loads first
-          className="h-16 w-auto"
+          className="h-24 w-auto"
         />
       </Link>
 

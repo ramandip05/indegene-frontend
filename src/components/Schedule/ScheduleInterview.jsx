@@ -21,7 +21,7 @@ const ScheduleInter = ({ candidateID, name, totalRounds, interviewDetails }) => 
   console.log("interviewDetails", interviewDetails);
 
   // --- State for the rounds ---
-  const [rounds, setRounds] = useState([1, 2, 3]);
+  const [rounds, setRounds] = useState([1]);
   // Initialize activeRound as 1; then update based on interviewDetails
   const [activeRound, setActiveRound] = useState(1);
 
@@ -164,7 +164,7 @@ const ScheduleInter = ({ candidateID, name, totalRounds, interviewDetails }) => 
   };
 
   const handleSalary = () => {
-    router.push(`/candidate-infoback`);
+    router.push(`/candidate-info/${candidateID}`);
   };
 
   return (
