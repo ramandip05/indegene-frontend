@@ -63,7 +63,7 @@ const CandidateDetails = () => {
   const receivedDocuments = [
     { name: "Aadhaar Card", image: "/images/Aadhar.png" },
     { name: "Pan Card", image: "/images/Pan.jpeg" },
-    { name: "Appraisal Letter", image: "/dummy-doc.png" },
+    { name: "Appraisal Letter", image: "/images/appraisal.png" },
     { name: "Experience Letter", image: "/images/Experience_Letter.png" },
     { name: "Oct Payslip", image: "/images/Payslip.png" },
     { name: "Nov Payslip", image: "/images/Payslip.png" },
