@@ -18,6 +18,7 @@ const CandidateInfo = () => {
     const [loading, setLoading] = useState(true); 
     const [candidateCTCID,setCandidateCTCID] = useState(null)
     const [candidateCTC,setCandidateCTC] = useState(null)
+    const [offerAccepted, setOfferAccepted] = useState(null);
     const fetchCandidateData = async () => {
       try {
         setLoading(true); // Start loading
@@ -54,18 +55,19 @@ const CandidateInfo = () => {
     useEffect(() => {
       fetchCandidateData();
     }, [candidateID]);
- 
+   
     // Values for the candidateInfo
     const candidateData = {
         "Notice Period (days)": 30,
         "Total Tenure": 2,
         "Average Tenure": 0.8,
         "Allocated CTC": 14,
-        "Offered CTC": 8,
-        "Saved CTC": 6
+      "Offered CTC": candidateCTC?.total_ctc? (candidateCTC.total_ctc / 100000).toFixed(2) : "NA",
+        "Saved CTC": candidateCTC?.total_ctc? 14-(candidateCTC.total_ctc / 100000).toFixed(2) : "NA",
     };
   
-    const [offerAccepted, setOfferAccepted] = useState(null); // State for Offer Accepted
+
+    console.log(offerAccepted) // State for Offer Accepted
  
     // Handle Offer Accepted Change
     const handleOfferChange = async (response) => {
@@ -110,7 +112,8 @@ const CandidateInfo = () => {
       }
     // Define colors
     const colors = ["#9370db", "#da70d6", "#b0e0e6"];
- 
+    const isOfferAccepted = offerAccepted === "yes" || candidateCTC?.offer_accepted?.toLowerCase() === "yes";
+    const isOfferRejected = offerAccepted === "no" || candidateCTC?.offer_accepted?.toLowerCase() === "no";
     // ApexChart Component for the Bar Chart
     const ApexBarChart = () => {
         const [state, setState] = useState({
@@ -479,7 +482,7 @@ const CandidateInfo = () => {
                 <div className="flex flex-1 flex-wrap gap-10 items-center">
                     <div className="flex flex-1 flex-wrap gap-10 items-center">
                         <Avatar className="w-28 h-28">
-                            <AvatarImage src={candidateInfo?.image} alt={candidateInfo[0]?.name} />
+                            <AvatarImage src={candidateInfo?.image} alt={candidateInfo?.name} />
                             <AvatarFallback>{candidateInfo?.name.charAt(0)}</AvatarFallback>
                         </Avatar>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-12 gap-y-4 text-gray-700 text-base w-full max-w-4xl">
@@ -525,27 +528,33 @@ const CandidateInfo = () => {
                 </div>
   */}
               <div className="flex justify-center">
-                <div className="bg-gray-100 p-6 rounded-lg flex flex-col items-center space-y-4 w-72">
-
-                    {/* Show Accept/Decline buttons only if offer is not decided */}
-                    {offerAccepted === null ? (
-                        <div className="flex space-x-4">
-                            <Button onClick={() => handleOfferChange("Yes")} className="bg-green-500 hover:bg-green-700 cursor-pointer">
-                                Yes
-                            </Button>
-                            <Button onClick={() => handleOfferChange("No")} className="bg-red-500 hover:bg-red-700 cursor-pointer">
-                                No
-                            </Button>
-                        </div>
-                    ) : (
-                        <p className={`text-lg font-semibold ${offerAccepted === "Yes" ? "text-green-600" : "text-red-600"}`}>
-                            {offerAccepted === "Yes" ? "Offer has been accepted!" : "Offer has been declined!"}
-                        </p>
-                    )}
+                    <div className="bg-gray-100 p-6 rounded-lg flex flex-col items-center space-y-4 w-72">
+                        {!isOfferAccepted && !isOfferRejected ? (
+                            <div className="flex space-x-4">
+                                <Button onClick={() => handleOfferChange("yes")} className="bg-green-500 hover:bg-green-700 cursor-pointer">
+                                    Yes
+                                </Button>
+                                <Button onClick={() => handleOfferChange("no")} className="bg-red-500 hover:bg-red-700 cursor-pointer">
+                                    No
+                                </Button>
+                            </div>
+                        ) : (
+                            <p className={`text-lg font-semibold ${isOfferAccepted ? "text-green-600" : "text-red-600"}`}>
+                                {isOfferAccepted ? "Offer has been accepted!" : "Offer has been declined!"}
+                            </p>
+                        )}
+                    </div>
                 </div>
-            </div>
-                {/* Salary Breakup */}
-                {offerAccepted === "Yes" && <SalaryBreakup candidateCTCID={candidateCTCID} candidateCTC={candidateCTC} candidateID={candidateID}/>}
+
+                {/* Salary Breakup Section */}
+                {isOfferAccepted && (
+                    <SalaryBreakup
+                        candidateCTCID={candidateCTCID}
+                        candidateCTC={candidateCTC}
+                        candidateID={candidateID}
+                        fetchCandidateData={fetchCandidateData}
+                    />
+                )}
             </div>
         </>
     );
