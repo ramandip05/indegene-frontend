@@ -218,49 +218,74 @@ const CandidateInfo = () => {
     };
  
     // ApexChart Component for the Radar Chart
+    // const ApexChart = () => {
+    //     const [state, setState] = React.useState({
+    //         series: [{
+    //             name: 'Series 1',
+    //             data: [80, 50, 65, 40, 66],
+    //         }],
+    //         options: {
+    //             chart: {
+    //                 height: 350,
+    //                 type: 'radar',
+    //             },
+    //             title: {
+    //                 text: ''
+    //             },
+    //             yaxis: {
+    //                 stepSize: 20
+    //             },
+    //             xaxis: {
+    //                 categories: ['figma',
+    //                     'marvel',
+    //                     'information architecture',
+    //                     'user research',
+    //                     'sketch']
+    //             }
+    //         }
+    //     });
+ 
+    //     return (
+ 
+ 
+    //         <div className="col-span-1 sm:col-span-2 lg:col-span-1">
+    //             <Card className="shadow-md border rounded-lg w-full h-full p-4">
+    //                 <CardContent className="flex flex-col items-center">
+    //                     <div id="chart" className="w-full">
+    //                         <ReactApexChart options={state.options} series={state.series} type="radar" height={350} />
+    //                     </div>
+    //                     <h2 className="text-xl font-semibold text-gray-800 mb-4">Skills & Tools</h2>
+ 
+    //                 </CardContent>
+    //             </Card>
+    //         </div>
+    //     );
+    // };
     const ApexChart = () => {
-        const [state, setState] = React.useState({
-            series: [{
-                name: 'Series 1',
-                data: [80, 50, 65, 40, 66],
-            }],
+        // Extract skills from candidateInfo (fallback to empty array if missing)
+        const skills = candidateInfo?.skills ? candidateInfo.skills.split(",").map(skill => skill.trim()) : [];
+    
+        // Generate random proficiency scores (if actual scores are unavailable)
+        const skillProficiency = skills.map(() => Math.floor(Math.random() * 50) + 50); // Random between 50-100
+    
+        const state = {
+            series: [{ name: "Skills", data: skillProficiency }],
             options: {
-                chart: {
-                    height: 350,
-                    type: 'radar',
-                },
-                title: {
-                    text: ''
-                },
-                yaxis: {
-                    stepSize: 20
-                },
-                xaxis: {
-                    categories: ['figma',
-                        'marvel',
-                        'information architecture',
-                        'user research',
-                        'sketch']
-                }
-            }
-        });
- 
+                chart: { height: 350, type: "radar", toolbar: { show: false } },
+                xaxis: { categories: skills.length > 0 ? skills : ["Skill 1", "Skill 2", "Skill 3"] }, // Default if empty
+            },
+        };
+    
         return (
- 
- 
-            <div className="col-span-1 sm:col-span-2 lg:col-span-1">
-                <Card className="shadow-md border rounded-lg w-full h-full p-4">
-                    <CardContent className="flex flex-col items-center">
-                        <div id="chart" className="w-full">
-                            <ReactApexChart options={state.options} series={state.series} type="radar" height={350} />
-                        </div>
-                        <h2 className="text-xl font-semibold text-gray-800 mb-4">Skills & Tools</h2>
- 
-                    </CardContent>
-                </Card>
-            </div>
+            <Card className="shadow-md border rounded-lg p-4">
+                <CardContent className="flex flex-col items-center">
+                    <ReactApexChart options={state.options} series={state.series} type="radar" height={380} />
+                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Skills & Tools</h2>
+                </CardContent>
+            </Card>
         );
     };
+    
  
     const ApexPercentChart = () => {
         const [state, setState] = React.useState({
@@ -270,7 +295,7 @@ const CandidateInfo = () => {
               height: 180, // Decreased the height for a smaller chart
               type: 'radialBar',
               toolbar: {
-                show: true
+                show: false
               }
             },
             plotOptions: {
