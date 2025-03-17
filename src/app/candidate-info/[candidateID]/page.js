@@ -555,6 +555,12 @@ const CandidateInfo = () => {
                         fetchCandidateData={fetchCandidateData}
                     />
                 )}
+                  
+                  <div className="bg-blue-700 p-3 shadow-md rounded-lg w-full text-center">
+                <button className="text-white" onClick={() => router.push(`/candidate-details/${candidateID}`)}>
+                    Initiate Document Process
+                </button>
+            </div>
             </div>
         </>
     );
