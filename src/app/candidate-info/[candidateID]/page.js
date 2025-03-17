@@ -6,13 +6,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import PaySearchFilter from "@/components/PaySearchFilter/PaySearchFilter";
 import SalaryBreakup from "@/components/SalaryBreakup/SalaryBreakup";
 import dynamic from "next/dynamic";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 // import ReactApexChart from "react-apexcharts";
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const CandidateInfo = () => {
     const {candidateID} = useParams();
+      const router = useRouter();
     const [candidateInfo,setCandidateInfo] = useState(null);
     const [interviewData,setInterviewData] = useState([]);
     const [loading, setLoading] = useState(true); 
@@ -557,7 +558,7 @@ const CandidateInfo = () => {
                 )}
                   
                   <div className="bg-blue-700 p-3 shadow-md rounded-lg w-full text-center">
-                <button className="text-white" onClick={() => router.push(`/candidate-details/${candidateID}`)}>
+                <button className="text-white w-60 cursor-pointer" onClick={() => router.push(`/candidate-details/${candidateID}`)}>
                     Initiate Document Process
                 </button>
             </div>
