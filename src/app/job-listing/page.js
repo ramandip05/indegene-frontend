@@ -6,10 +6,14 @@ import JobPagination from "@/components/JobPagination/JobPagination";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import SidebarFilters from "@/components/SidebarFilters/SidebarFilters";
 import { Loader2 } from "lucide-react"; // Import a spinner icon from Lucide
+import { Button } from "@/components/ui/button";
+import { useRouter } from 'next/navigation';
 
 const JobListing = () => {
   const [jobData, setJobData] = useState([]);
   const [loading, setLoading] = useState(true); // State for loader
+  const router = useRouter();
+
 
   const fetchJobData = async () => {
     try {
@@ -31,9 +35,19 @@ const JobListing = () => {
     fetchJobData();
   }, []);
 
+  const navigateToCandidateProgress = () => {
+    router.push('/candidate-progress');
+  };
+
   return (
     <div className="p-6 w-full">
+        <div className="flex  justify-end ">
+        <Button onClick={navigateToCandidateProgress} className="cursor-pointer bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md flex justify-end">
+                  Candidate Progress
+                </Button>
+                </div>
       <SearchBar />
+      
       <FilterHeader />
       <div className="flex gap-6 mt-6">
         {/* Sidebar Filters Placeholder */}
