@@ -164,7 +164,8 @@ const ScheduleInter = ({ candidateID, name, totalRounds, interviewDetails }) => 
   };
 
   const handleSalary = () => {
-    router.push(`/candidate-info/${candidateID}`);
+    // router.push(`/candidate-info/${candidateID}`);
+    router.push(`/candidate-assesment/${candidateID}`);
   };
 
   return (
